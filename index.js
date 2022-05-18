@@ -8,10 +8,8 @@ window.addEventListener("load", () => {
 
 document.getElementById("opener").addEventListener("click", () => {
     const popup = window.open(origin);
-    popup.addEventListener("load", () => {
-        console.log("popup loaded, send handshake");
-        popup.postMessage("handshake", origin);
-    });
+    console.log("send handshake");
+    popup.postMessage("handshake", origin);
 });
 
 window.addEventListener(
