@@ -8,15 +8,16 @@ window.addEventListener("load", () => {
 
 document.getElementById("opener").addEventListener("click", () => {
     const popup = window.open(origin);
-    console.log("send handshake");
-    setTimeout(() => {
+    popup.addEventListener("load", () => {
+        console.log("popup loaded, send handshake");
         popup.postMessage("handshake", origin);
-    }, 5000)
+    }, false);
 });
 
 window.addEventListener(
     "message",
     (event) => {
+        console.log(event.origin, event.data);
         if (event.origin === origin && event.data === "handshake") {
             console.log(JSON.stringify(origin));
             console.log(JSON.stringify(event.data));
