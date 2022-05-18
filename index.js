@@ -1,4 +1,10 @@
-const origin = "https://kc19vk.csb.app";
+let origin = "";
+
+window.addEventListener("load", () => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    origin = urlParams.get('origin')
+})
 
 document.getElementById("opener").addEventListener("click", () => {
     const popup = window.open(origin);
