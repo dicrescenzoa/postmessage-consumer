@@ -12,7 +12,7 @@ const polling = () => {
     interval = setInterval(() => {
         console.log("polling HANDSHAKE-SYN...");
         popup.postMessage("HANDSHAKE-SYN", url.href);
-    }, 100);
+    }, 500);
 }
 
 document.getElementById("opener").addEventListener("click", () => {
