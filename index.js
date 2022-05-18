@@ -10,8 +10,9 @@ window.addEventListener("load", () => {
 
 const polling = () => {
     interval = setInterval(() => {
+        console.log("polling HANDSHAKE-SYN...");
         popup.postMessage("HANDSHAKE-SYN", url.href);
-    }, 1000);
+    }, 100);
 }
 
 document.getElementById("opener").addEventListener("click", () => {
