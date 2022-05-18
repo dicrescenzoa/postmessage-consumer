@@ -9,7 +9,9 @@ window.addEventListener("load", () => {
 document.getElementById("opener").addEventListener("click", () => {
     const popup = window.open(origin);
     console.log("send handshake");
-    popup.postMessage("handshake", origin);
+    setTimeout(() => {
+        popup.postMessage("handshake", origin);
+    }, 5000)
 });
 
 window.addEventListener(
