@@ -1,31 +1,35 @@
-let origin = "";
+let url = null;
+let popup = "";
+let interval = null;
 
 window.addEventListener("load", () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    origin = urlParams.get('origin')
+    url = new URL(urlParams.get('href'));
 })
 
+const polling = () => {
+    interval = setInterval(() => {
+        popup.postMessage("HANDSHAKE-SYN", url.href);
+    }, 1000);
+}
+
 document.getElementById("opener").addEventListener("click", () => {
-    const popup = window.open(origin);
-    console.log("send message");
-    popup.postMessage("handshake", origin);
-    setTimeout(() => {
-        console.log("send message after 5000");
-        popup.postMessage("handshake", origin);
-    }, 5000)
+    popup = window.open(url.href);
+    polling();
 });
 
 window.addEventListener(
     "message",
     (event) => {
         console.log(event.origin, event.data);
-        if (event.origin === origin && event.data === "handshake") {
-            console.log(JSON.stringify(origin));
-            console.log(JSON.stringify(event.data));
-            document
-                .getElementById("logger")
-                .append(`<p>${JSON.stringify(event.data)}</p>`);
+        if(event.origin === url.origin) {
+            if (event.data === "HANDSHAKE-ACK") {
+                clearInterval(interval);
+            }
+                document
+                    .getElementById("logger")
+                    .append(`<p>${JSON.stringify(event.data)}</p>`);
         }
     },
     false
